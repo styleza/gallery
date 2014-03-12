@@ -1,0 +1,15 @@
+<h1><?=$this->translate('exception')?></h1>
+
+<tt><?=$this->translate('message')?>: <?=$this->exception->getMessage()?></tt>
+
+<h2><?=$this->translate('info')?></h2>
+
+<pre>
+<?=$this->translate('line')?>: <?=$this->exception->getLine()?>
+<br/>
+<?=$this->translate('file')?>: <?=$this->exception->getFile()?>
+<br/>
+<?=$this->translate('trace')?>:
+<br/>
+<?=$this->exception->getTraceAsString()?>
+</pre>

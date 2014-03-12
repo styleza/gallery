@@ -1,0 +1,11 @@
+<?php
+return array(
+    'db' => array(
+        'adapter_class' => 'db_adapter_mysql',
+        'DSN' => 'mysql:host=localhost;dbname=<DATABASE NAME>',
+        'user' => '<USERNAME>',
+        'password' => '<PASSWORD>'
+    ),
+    'locale' => 'fi_FI',
+    'layout' => 'layout.phtml'
+);
