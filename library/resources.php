@@ -33,9 +33,9 @@ class resources {
         return null;
     }
     
-    public static function getMvc($request){
-        $controllerClass = 'controller_'.$request['controller'];
-
+    public static function getMvc(mvc_request $request){
+        $controllerClass = $request->getControllerClass();
+        
         return new $controllerClass($request);
         
     }
@@ -54,9 +54,43 @@ class resources {
         return self::$_registry['tr_'.$locale];
     }
     
-    public static function startMvc($request){
+    public static function startMvc(mvc_request $request){
+        
+        if(!class_exists($request->getControllerClass())){
+            
+            return self::getMvcByHttpReturnCode(404);
+        }
+        
         $class = self::getMvc($request);
-        return $class->run($request['action']);
+
+        if(!method_exists($class,
+                $request->getActionMethod())){
+            
+            return self::getMvcByHttpReturnCode(404);
+            
+        }
+        
+        return $class->run($request->getAction());
+    }
+    
+    public static function getMvcByHttpReturnCode($code){
+        
+        switch($code){
+            case 404:
+                if(self::get('config')->get('404_action',false)){
+                    
+                    return self::startMvc(array('controller' => 'controller_error',
+                        'action' => self::get('config')->get('404_action')));
+                    
+                } else {
+                    return self::get404();
+                }
+        }
+    }
+    
+    public static function get404(){
+        $view = new mvc_view();
+        return $view->render('static/view/404.phtml');
     }
 
 }

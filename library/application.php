@@ -11,12 +11,7 @@ class application {
     }
     
     protected function pre(){
-        if(!isset($this->_request['controller'])){
-            $this->_request['controller'] = 'index';
-        }
-        if(!isset($this->_request['action'])){
-            $this->_request['action'] = 'index';
-        }
+        
     }
     
     protected function post(){
@@ -34,7 +29,7 @@ class application {
     }
     
     public function run(array $request){
-        $this->_request = $request;
+        $this->_request = new mvc_request($request);
         $this->pre();
         $this->handleRequest();
         $this->post();

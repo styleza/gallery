@@ -9,7 +9,7 @@ abstract class mvc_controller_abstract{
     
     private $_controllerName;
     
-    public function __construct($request) {
+    public function __construct(mvc_request $request) {
 
         $this->request = $request;
         
@@ -17,7 +17,7 @@ abstract class mvc_controller_abstract{
         $this->layout = new mvc_view();
         $this->layoutScript = resources::get('layout');
         
-        $this->_controllerName = $request['controller'];
+        $this->_controllerName = $request->getController();
 
     }
     
