@@ -47,8 +47,9 @@ class resources {
         }
         
         if(!isset(self::$_registry['tr_'.$locale])){
-            $translations = include 'translation/' . $locale . '.php';
-            self::$_registry['tr_'.$locale] = new translator($translations);
+            $appTranslations = include 'translation/' . $locale . '.php';
+            $staticTranslations = include 'static/translation/' . $locale . '.php';
+            self::$_registry['tr_'.$locale] = new translator(array_merge($appTranslations,$staticTranslations));
         }
 
         return self::$_registry['tr_'.$locale];
