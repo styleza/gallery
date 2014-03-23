@@ -1,0 +1,19 @@
+<h1>TABLE DUMP</h1>
+<?php
+foreach($this->db as $tableName => $object){
+
+    echo '<h1>' . $tableName . '</h1>';
+    echo '<table border=1><tr>';
+    foreach(array_keys($object[0]->getColumns()) as $col){
+        echo '<th>' . $col . '</th>';
+    }
+    echo '</tr>';
+    foreach($object as $entity){
+        echo '<tr>';
+        foreach(array_keys($entity->getColumns()) as $col){
+            echo '<td>' . $entity->{$col} . '</td>';
+        }
+        echo '</tr>';
+    }
+    echo '</table>';
+}

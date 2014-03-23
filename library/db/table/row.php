@@ -20,19 +20,27 @@ abstract class db_table_row {
         return $dbTableClassName::$dbTableName;
     }
     
-    public function save(){
-        $isUpdate = ($this->{$this->primaryKey} ? true : false);
-
-        $sql = '';
-
-        $dbTable = $this->getParentTable();
-        
+    public function getColumns(){
         $cols = get_class_vars(get_class($this));
         foreach($cols as $key => $dat){
             if(in_array($key,array('primaryKey','dbTableClass'))){
                 unset($cols[$key]);
             }
         }
+        return $cols;
+    }
+    
+    public function save(){
+        if(!$this->primaryKey){
+            throw new Exception("Can't save row because primary key is unset");
+        }
+        $isUpdate = ($this->{$this->primaryKey} ? true : false);
+
+        $sql = '';
+
+        $dbTable = $this->getParentTable();
+        
+        $cols = $this->getColumns();
        
         $bindings = array();
         
@@ -61,6 +69,9 @@ abstract class db_table_row {
     }
     
     public function delete(){
+        if(!$this->primaryKey){
+            throw new Exception("Can't save row because primary key is unset");
+        }
         if(!$this->{$this->primaryKey}){
             throw new Exception('cant remove row that does not exists in database');
         }

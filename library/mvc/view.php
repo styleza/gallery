@@ -30,8 +30,15 @@ class mvc_view{
         return $this->_translator->_($key);
     }
     
-    public function partial(string $viesScript, array $data = array()){
+    public function partial($viesScript, array $data = array()){
         $view = new self($data);
         return $view->render($viesScript);
+    }
+    
+    public function baseUrl($file = ""){
+        return resources::get('config')->get('baseUrl','') . '/' . $file;
+    }
+    public function resource($resourceName){
+        return resources::get($resourceName);
     }
 }

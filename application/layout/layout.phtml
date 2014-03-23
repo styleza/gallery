@@ -1,2 +1,27 @@
-<h1>LAYOUT</h1>
-<?=$this->content?>
+<html>
+    <head>
+        <title><?=$this->translate('photo_gallery')?> - <?=$this->translate($this->title)?></title>
+        <script src="<?=$this->baseUrl('js/holder.js')?>"></script>
+        <script src="<?=$this->baseUrl('js/jquery.js')?>"></script>
+        <script src="<?=$this->baseUrl('js/rating.js')?>"></script>
+        <link href="<?=$this->baseUrl('css/bootstrap.css')?>" rel="stylesheet">
+        <link href="<?=$this->baseUrl('css/bootstrap-theme.css')?>" rel="stylesheet">
+        <link href="<?=$this->baseUrl('css/main.css')?>" rel="stylesheet">
+        <base href="<?=$this->baseUrl()?>" />
+    </head>
+    <body>
+        <nav id="navigation" class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <ul class="nav navbar-nav">
+                <?php foreach($this->resource('navigation')->getNavigation() as $naviEntry){ ?>
+                <li><a href="<?=$this->baseUrl($naviEntry->naviUrl)?>"><?=$this->translate($naviEntry->naviName)?></a></li>
+                <?php } ?>
+            </ul>
+        </nav>
+        <div id="main_container">
+            <div id="content">
+                <?=$this->content?>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </body>
+</html>

@@ -7,5 +7,6 @@ return array(
         'password' => '<PASSWORD>'
     ),
     'locale' => 'fi_FI',
-    'layout' => 'layout.phtml'
+    'layout' => 'layout.phtml',
+    'baseUrl' => '/path/to/base/public'
 );

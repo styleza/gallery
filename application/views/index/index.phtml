@@ -1,1 +1,12 @@
-index file
+<h2><?=$this->translate('recent_images')?></h2>
+<?php for($i = 0; $i < 3; $i++){
+    echo $this->partial('views/list/object.phtml');
+} ?>
+<h2><?=$this->translate('top_rated_images')?></h2>
+<?php for($i = 0; $i < 3; $i++){
+    echo $this->partial('views/list/object.phtml');
+}?>
+<h2><?=$this->translate('most_used_tags')?></h2>
+<a href="list/tag">tag1</a>
+<a href="list/tag">tag2</a>
+<a href="list/tag">tag3</a>

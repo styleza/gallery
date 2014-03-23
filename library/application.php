@@ -5,6 +5,7 @@ require_once 'errorhandler.php';
 class application {
     protected $_request;
     protected $_output;
+    protected $_router;
     
     public function __construct(){
 
@@ -29,11 +30,18 @@ class application {
     }
     
     public function run(array $request){
+        if($this->_router){
+            $request = array_merge($request,$this->_router->route($_SERVER['REQUEST_URI']));
+        }
         $this->_request = new mvc_request($request);
         $this->pre();
         $this->handleRequest();
         $this->post();
         
         return $this->_output;
+    }
+    
+    public function registerRouter($router){
+        $this->_router = $router;
     }
 }

@@ -4,12 +4,12 @@ function mvc_errorhandler($errno,  $errstr,  $errfile,  $errline, $errcontext){
     resources::getMvc($request)->run('error');
 }
 function mvc_exceptionhandler($e){
-    $request = array(
+    $request = new mvc_request(array(
         'controller' => 'error',
         'action' => 'excetpion',
         'exception' => $e
-    );
-    resources::getMvc($request)->run('exception');
+    ));
+    echo resources::getMvc($request)->run('exception');
 }
 
 //set_error_handler("mvc_errorhandler");

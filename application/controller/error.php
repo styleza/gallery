@@ -21,6 +21,6 @@ class controller_error extends mvc_controller_abstract {
     }
     
     public function exceptionAction(){
-        $this->view->exception = $this->request['exception'];
+        $this->view->exception = $this->request->exception;
     }
 }

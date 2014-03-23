@@ -7,5 +7,7 @@ class model_entity_user extends db_table_row {
     public $id;
     public $username;
     public $password;
+    public $password_salt;
     public $email;
+    public $last_login;
 }

@@ -1,0 +1,5 @@
+INSERT INTO `tsoha`.`users` (`id` ,`username` ,`email` ,`password` ,`password_salt` ,`last_login`) VALUES (1 ,  'test_user_1',  'test1@example.com',  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',  '1234567890123456', CURRENT_TIMESTAMP), (2 ,  'test_user_2',  'test2@example.com',  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',  '1234567890123456', CURRENT_TIMESTAMP);
+INSERT INTO `tsoha`.`tag` (`id`, `tag_name`) VALUES ('1', 'kissa'), ('2', 'koira');´
+INSERT INTO `tsoha`.`photo` (`id`, `file_id`, `file_name`, `user_id`, `description`, `short_url_id`, `rating_sum`, `rating_count`, `visibility`) VALUES ('1', 'RANDOM_FILE_ID_1', 'Pertin_kissa.jpg', '1', 'Pertin kissa', 'RF1', '0', '0', '0'), ('2', 'RANDOM_FILE_ID_1', 'Aatun_koira.jpg', '2', 'Aatun koira auringossa', 'RF2', '0', '0', '0');
+INSERT INTO `tsoha`.`photo_tag` (`photo_id`, `tag_id`) VALUES ('1', '1'), ('2', '2');
+INSERT INTO `tsoha`.`comment` (`photo_id`, `comment`, `comment_added`, `user_id`) VALUES ('1', 'Kiva kissa', CURRENT_TIMESTAMP, '2'), ('2', 'Kiva koira', CURRENT_TIMESTAMP, '1');

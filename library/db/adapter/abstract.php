@@ -7,6 +7,8 @@ abstract class db_adapter_abstract {
     protected $_password;
     protected $_DSN;
     
+    protected $_lastReturnValue;
+    
     
     public function __construct($configArray) {
         $this->_user = $configArray['user'];
@@ -20,6 +22,12 @@ abstract class db_adapter_abstract {
     
     public function runSql($sql,array $bindings = null){
         $sth = $this->_adapter->prepare($sql);
-        return $sth->execute($bindings);
+        
+        $this->_lastReturnValue = $sth->execute($bindings);
+        return $sth->fetchAll();
+    }
+    
+    public function getLastReturnValue(){
+        return $this->_lastReturnValue;
     }
 }

@@ -1,0 +1,1 @@
+DROP TABLE `comment`, `photo`, `photo_tag`, `tag`, `users`;

@@ -1,0 +1,6 @@
+<h1>Connection established</h1>
+<p>adapter class: <?=get_class($this->adapter)?></p>
+<p>Example SQL: SHOW TABLES;</p>
+<pre>
+<?php print_r($this->adapter->runSql('SHOW TABLES'))?>
+</pre>

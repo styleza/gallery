@@ -1,0 +1,32 @@
+<h1><?=$this->translate('register')?></h1>
+<form class="form-horizontal" role="form" action="<?=$this->baseUrl('user/postregister')?>" method="POST">
+    <div class="form-group">
+    <label for="inputEmail1" class="col-md-2 control-label"><?=$this->translate('username')?></label>
+    <div class="col-md-10">
+      <input type="text" class="form-control" id="inputUsername1" name="username" placeholder="<?=$this->translate('username')?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail1" class="col-md-2 control-label"><?=$this->translate('e-mail')?></label>
+    <div class="col-md-10">
+      <input type="email" class="form-control" id="inputEmail1" name="email" placeholder="<?=$this->translate('e-mail')?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword1" class="col-md-2 control-label"><?=$this->translate('password')?></label>
+    <div class="col-md-10">
+      <input type="password" class="form-control" id="inputPassword1" name="password" placeholder="<?=$this->translate('password')?>">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputPassword2" class="col-md-2 control-label"><?=$this->translate('repeat_password')?></label>
+    <div class="col-md-10">
+      <input type="password" class="form-control" id="inputPassword2" name="password2" placeholder="<?=$this->translate('password')?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" class="btn btn-default"><?=$this->translate('register')?></button>
+    </div>
+  </div>
+</form>

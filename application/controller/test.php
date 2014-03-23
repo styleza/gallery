@@ -12,11 +12,14 @@
  * @author Ilari
  */
 class controller_test extends mvc_controller_abstract {
-    public function indexAction(){
-        $userTable = new model_table_users();
-        $user = $userTable->createRow();
-        $user->username = 'test';
-        $user->password = 'test';
-        $user->save();
+    public function dbAction(){
+        $dbModel = new model_printdb();
+        
+        $this->view->db = $dbModel->getDb();
+        $this->layout->title = 'db_dump';
+    }
+    
+    public function connectionAction(){
+        $this->view->adapter = resources::get('adapter');
     }
 }

@@ -1,4 +1,26 @@
 <?php
 return array(
-    'exception' => 'virhe'
+    'exception' => 'virhe',
+    'index' => 'Etusivu',
+    'login' => 'Kirjaudu sisään',
+    'register' => 'Rekisteröidy',
+    'add_image' => 'Lisää kuva',
+    'logout' => 'Kirjaudu ulos',
+    'edit_own_info' => 'Muokkaa omia tietoja',
+    'list_images' => 'Näytä kuvat',
+    'recent_images' => 'Uusimmat kuvat',
+    'top_rated_images' => 'Parhaimmaksi äänestetyt kuvat',
+    'most_used_tags' => 'Käytetyimmät tägäykset',
+    'username' => 'Käyttäjänimi',
+    'password' => 'Salasana',
+    'e-mail' => 'Sähköposti',
+    'repeat_password' => 'Toista salasana',
+    'image_file' => 'Kuvatiedosto',
+    'description' => 'Kuvaus',
+    'remove' => 'Poista',
+    'edit_privacy' => 'Muuta näkyvyyttä',
+    'comment' => 'Kommentoi',
+    'photo_gallery' => 'Kuvagalleria',
+    'view_image' => 'Katso kuvaa',
+    'list' => 'Lista'
 );

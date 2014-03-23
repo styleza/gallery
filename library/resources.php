@@ -1,16 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of resources
- *
- * @author Ilari
- */
 class resources {
     private static $_registry;
     
@@ -20,10 +8,10 @@ class resources {
         
         $dbConfig = $configArray['db'];
         
-        self::$_registry['adapter'] = new $dbConfig['adapter_class']($dbConfig);
-        self::$_registry['layout'] = self::get('config')->get('layout',false);
-        self::$_registry['translator'] = self::getTranslator();
-        self::$_registry['session'] = new session();
+        self::set('adapter',new $dbConfig['adapter_class']($dbConfig));
+        self::set('layout',self::get('config')->get('layout',false));
+        self::set('translator',self::getTranslator());
+        self::set('session',new session());
     }
     
     public static function get($resourceId){
@@ -31,6 +19,10 @@ class resources {
             return self::$_registry[$resourceId];
         }
         return null;
+    }
+    
+    public static function set($resourceId, $resourceData){
+        self::$_registry[$resourceId] = $resourceData;
     }
     
     public static function getMvc(mvc_request $request){

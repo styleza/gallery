@@ -5,7 +5,7 @@
  * @author Ilari
  */
 abstract class db_table_abstract {
-    public static $dbTableName;
+    public static $dbTableName = 'default';
     protected $entityClass;
     
     public function createRow(array $existingData = null){
@@ -20,7 +20,12 @@ abstract class db_table_abstract {
         return $newEntity;
     }
     
-    public function fetchConditional(array $conditions = null, array $cols = null,string $order = null, int $limit = null){
+    public function getTableName(){
+        $className = get_called_class();
+        
+        return $className::$dbTableName;
+    }
+    public function fetchConditional(array $conditions = array(), array $cols = null,string $order = null, int $limit = null){
         $sql = 'SELECT ';
         
         if(!$cols){
@@ -28,8 +33,8 @@ abstract class db_table_abstract {
         } else {
             $sql .= '('.implode(',', $cols).') ';
         }
-        
-        $sql .= 'FROM ' . self::$dbTableName;
+
+        $sql .= 'FROM ' . $this->getTableName();
         
         
         if($conditions){
@@ -47,7 +52,7 @@ abstract class db_table_abstract {
         return $this->fetchSql($sql, array_values($conditions), true);
     }
     
-    public function fetchSql($sql,array $bindings,bool $integrable){
+    public function fetchSql($sql,array $bindings, $integrable){
         $result = resources::get('adapter')->runSql($sql,$bindings);
         
         $rv = array();
@@ -83,7 +88,7 @@ abstract class db_table_abstract {
     }
     
     public function delete(array $conditions){
-        $sql = 'DELETE FROM ' . self::$dbTableName . ' WHERE ';
+        $sql = 'DELETE FROM ' . $this->getTableName() . ' WHERE ';
         $sql .= implode(",",array_keys($conditions));
         return resources::get('adapter')->runSql($sql,array_values($conditions));
     }

@@ -1,6 +1,7 @@
 <?php
 abstract class mvc_controller_abstract{
     protected $view;
+    protected $layoyt;
     
     protected $layoutView;
     protected $layoutScript;
@@ -33,4 +34,8 @@ abstract class mvc_controller_abstract{
         }
     }
     
+    public function redirect($uri){
+        header('Location: ' . resources::get('config')->get('baseUrl') . '/' . $uri);
+        die();
+    }
 }
