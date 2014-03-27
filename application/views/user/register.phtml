@@ -1,15 +1,22 @@
 <h1><?=$this->translate('register')?></h1>
+<?php if($this->error){
+    foreach($this->error as $error){ ?>
+<div class="alert alert-danger"><?=$this->translate($error)?></div>
+<?php
+    }
+}
+?>
 <form class="form-horizontal" role="form" action="<?=$this->baseUrl('user/postregister')?>" method="POST">
     <div class="form-group">
-    <label for="inputEmail1" class="col-md-2 control-label"><?=$this->translate('username')?></label>
+    <label for="inputUsername1" class="col-md-2 control-label"><?=$this->translate('username')?></label>
     <div class="col-md-10">
-      <input type="text" class="form-control" id="inputUsername1" name="username" placeholder="<?=$this->translate('username')?>">
+      <input type="text" class="form-control" id="inputUsername1" name="username" placeholder="<?=$this->translate('username')?>" <?=($this->request?'value="'.$this->request->username.'"':'')?>>
     </div>
   </div>
   <div class="form-group">
     <label for="inputEmail1" class="col-md-2 control-label"><?=$this->translate('e-mail')?></label>
     <div class="col-md-10">
-      <input type="email" class="form-control" id="inputEmail1" name="email" placeholder="<?=$this->translate('e-mail')?>">
+      <input type="email" class="form-control" id="inputEmail1" name="email" placeholder="<?=$this->translate('e-mail')?>" <?=($this->request?'value="'.$this->request->email.'"':'')?>>
     </div>
   </div>
   <div class="form-group">

@@ -10,6 +10,8 @@ abstract class mvc_controller_abstract{
     
     private $_controllerName;
     
+    private $_viewScript;
+    
     public function __construct(mvc_request $request) {
 
         $this->request = $request;
@@ -23,8 +25,11 @@ abstract class mvc_controller_abstract{
     }
     
     public function run($action){
+        $this->_viewScript = $action;
+        
         $this->{$action."Action"}();
-        $viewScript = 'views/' . $this->_controllerName . '/' . $action . '.phtml';
+        
+        $viewScript = 'views/' . $this->_controllerName . '/' . $this->_viewScript . '.phtml';
         
         if($this->layoutScript){
             $this->layout->content = $this->view->render($viewScript);
@@ -37,5 +42,9 @@ abstract class mvc_controller_abstract{
     public function redirect($uri){
         header('Location: ' . resources::get('config')->get('baseUrl') . '/' . $uri);
         die();
+    }
+    
+    public function changeView($viewScript){
+        $this->_viewScript = $viewScript;
     }
 }

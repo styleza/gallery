@@ -1,4 +1,9 @@
 <h1><?=$this->translate('login')?></h1>
+<?php if($this->error){ ?>
+<div class="alert alert-danger"><?=$this->translate('invalid_username_or_password')?></div>
+<?php
+} 
+?>
 <form class="form-horizontal" role="form" action="<?=$this->baseUrl('auth/authenticate')?>" method="POST">
   <div class="form-group">
     <label for="inputUsername1" class="col-md-2 control-label"><?=$this->translate('username')?></label>

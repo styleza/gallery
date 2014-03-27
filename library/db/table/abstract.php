@@ -25,7 +25,7 @@ abstract class db_table_abstract {
         
         return $className::$dbTableName;
     }
-    public function fetchConditional(array $conditions = array(), array $cols = null,string $order = null, int $limit = null){
+    public function fetchConditional(array $conditions = array(), array $cols = null, $order = null, $limit = null){
         $sql = 'SELECT ';
         
         if(!$cols){
@@ -54,7 +54,6 @@ abstract class db_table_abstract {
     
     public function fetchSql($sql,array $bindings, $integrable){
         $result = resources::get('adapter')->runSql($sql,$bindings);
-        
         $rv = array();
         
         foreach($result as $row){

@@ -16,6 +16,9 @@ class session {
     
     public function __construct(){
         session_start();
+        foreach($_SESSION as $key => $value){
+            $this->_data[$key] = $value;
+        }
     }
     
     public function __set($name,$value){

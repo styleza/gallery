@@ -22,5 +22,11 @@ return array(
     'comment' => 'Kommentoi',
     'photo_gallery' => 'Kuvagalleria',
     'view_image' => 'Katso kuvaa',
-    'list' => 'Lista'
+    'list' => 'Lista',
+    'invalid_username_or_password' => 'Virheellinen käyttäjänimi tai salasana',
+    'username_already_in_use' => 'Käyttäjätunnus on varattu',
+    'username_is_too_short' => 'Käyttäjätunnus on liian lyhyt (min 3 merkkiä)',
+    'password_is_too_weak' => 'Salasana on liian heikko',
+    'email_is_not_valid' => 'Sähköpostiosoite ei ole validi',
+    'username_contains_invalid_char' => 'Käyttäjänimi sisältää kiellettyjä merkkejä'
 );

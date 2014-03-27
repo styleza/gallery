@@ -24,7 +24,10 @@ abstract class db_adapter_abstract {
         $sth = $this->_adapter->prepare($sql);
         
         $this->_lastReturnValue = $sth->execute($bindings);
-        return $sth->fetchAll();
+        if($sth->columnCount() > 0){
+            return $sth->fetchAll();
+        }
+        return null;
     }
     
     public function getLastReturnValue(){
