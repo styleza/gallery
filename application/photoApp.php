@@ -31,10 +31,10 @@ class photoApp extends application {
     private function validateRoute($login){
         $unAuthAllowed = array('/','index/index','auth/login','user/register',
             'image/view','list/user','auth/authenticate','user/postregister',
-            'test/db','test/connection');
+            'test/db','test/connection','list/tag');
         
         $authAllowed = array('/','index/index','auth/logout','user/edit','list/user',
-            'image/view','test/db','test/connection','image/add');
+            'image/view','test/db','test/connection','image/add','list/tag');
         
         $controllerAction = $this->_request->controller . '/' . $this->_request->action;
 
