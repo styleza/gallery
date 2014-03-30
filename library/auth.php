@@ -20,14 +20,15 @@ class auth {
         $hashedPassword = self::hashPassword($password,$row->{$saltColumn});
         
         if($row && $row->{$passwordColumn} == $hashedPassword){
-            $this->saveSessionData($identity);
+            $this->saveSessionData($identity,$row);
             return true;
         } else {
             return false;
         }
     }
-    private function saveSessionData($identity){
+    private function saveSessionData($identity,$userRow){
         $this->_session->identity = $identity;
+        $this->_session->user = $userRow;
         $this->_session->login = true;
     }
     

@@ -34,7 +34,7 @@ class photoApp extends application {
             'test/db','test/connection');
         
         $authAllowed = array('/','index/index','auth/logout','user/edit','list/user',
-            'image/view','test/db','test/connection');
+            'image/view','test/db','test/connection','image/add');
         
         $controllerAction = $this->_request->controller . '/' . $this->_request->action;
 
