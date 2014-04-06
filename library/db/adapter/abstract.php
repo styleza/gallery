@@ -33,4 +33,8 @@ abstract class db_adapter_abstract {
     public function getLastReturnValue(){
         return $this->_lastReturnValue;
     }
+    
+    public function lastInsertId(){
+        return $this->_adapter->lastInsertId();
+    }
 }

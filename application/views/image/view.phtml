@@ -1,36 +1,38 @@
-<img data-src="holder.js/800x800" alt="..." />
-<div id="dsc" class="panel panel-default">Kuvaus kommer här</div>
+<img src="<?=$this->baseUrl('image/get/file/'.$this->image["photo"]->file_id.'/size/800x600')?>" alt="..." />
+<div id="dsc" class="panel panel-default"><?=$this->image["photo"]->description?></div>
 
 <div class="panel">
-    <a href="<?=$this->baseUrl('list/tag')?>">tag1</a>
-    <a href="<?=$this->baseUrl('list/tag')?>">tag2</a>
-    <a href="<?=$this->baseUrl('list/tag')?>">tag3</a>
-    <a href="<?=$this->baseUrl('list/tag')?>">tag4</a>
+    <?php foreach($this->image["tags"] as $tagId => $tagName){?>
+    <a href="list/tag/id/<?=$tagId?>"><?=$tagName?></a>
+    <?php }?>
 </div>
 
 <div class="panel">
-    <input type="number" name="rate" id="some_id" class="rating" />
+    <input type="number" name="rate" id="rating_element" class="rating" />
 </div>
-
+<?php foreach($this->image["comments"] as $comment){ ?>
 <div class="panel panel-primary">
-  <div class="panel-heading">Teppoperusjäbä</div>
+  <div class="panel-heading"><?=$comment["username"]?> @ <?=date("d.m.Y H:i",strtotime($comment["comment_added"]))?></div>
   <div class="panel-body">
-    Hieno kuva hermanni
+    <?=$comment["comment"]?>
   </div>
 </div>
-<div class="panel panel-primary">
-  <div class="panel-heading">Teppoperusjäbä</div>
-  <div class="panel-body">
-    Ei ookkaan
-  </div>
-</div>
+<?php } ?>
+<form class="form-horizontal" role="form" action="<?=$this->baseUrl('image/comment')?>" method="POST">
+<input type="hidden" name="file" value="<?=$this->image["photo"]->file_id?>" />
+<input type="hidden" name="returnPath" value="image/view/id/<?=$this->image["photo"]->short_url_id?>" />
 <div>
   <div class="input-group">
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" name="comment">
     <span class="input-group-btn">
         
-      <button class="btn btn-default" type="button"><?=$this->translate('comment')?> <span class ="glyphicon glyphicon-comment"></span></button>
+      <button class="btn btn-default" type="submit"><?=$this->translate('comment')?> <span class ="glyphicon glyphicon-comment"></span></button>
     </span>
   </div>
 </div>
-
+</form>
+<script type="text/javascript">
+    $("#rating_element").change(function(){
+        $.get('<?=$this->baseUrl('image/rate/file/'.$this->image["photo"]->file_id.'/rating/')?>'+$(this).val());
+    });
+</script>

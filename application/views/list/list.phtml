@@ -1,0 +1,5 @@
+<div class="row">
+    <?php foreach($this->images as $image){
+       echo $this->partial('views/list/object.phtml',array('photo' => $image["photo"], 'controls' => $this->isownpage));
+    } ?>
+</div>

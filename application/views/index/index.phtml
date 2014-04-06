@@ -1,12 +1,15 @@
 <h2><?=$this->translate('recent_images')?></h2>
-<?php for($i = 0; $i < 3; $i++){
-    echo $this->partial('views/list/object.phtml');
+<?php foreach($this->newest as $photo){
+    echo $this->partial('views/list/object.phtml',array('photo' => $photo,'controls' => false));
 } ?>
+<div style="clear:both"></div>
 <h2><?=$this->translate('top_rated_images')?></h2>
-<?php for($i = 0; $i < 3; $i++){
-    echo $this->partial('views/list/object.phtml');
+<?php foreach($this->best as $photo){
+    echo $this->partial('views/list/object.phtml',array('photo' => $photo,'controls' => false));
 }?>
+<div style="clear:both"></div>
 <h2><?=$this->translate('most_used_tags')?></h2>
+
 <a href="list/tag">tag1</a>
 <a href="list/tag">tag2</a>
 <a href="list/tag">tag3</a>

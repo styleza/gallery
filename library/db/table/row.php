@@ -31,10 +31,10 @@ abstract class db_table_row {
     }
     
     public function save(){
-        if(!$this->primaryKey){
+        $isUpdate = ($this->primaryKey && $this->{$this->primaryKey} ? true : false);
+        if(!$this->primaryKey && $isUpdate){
             throw new Exception("Can't save row because primary key is unset");
         }
-        $isUpdate = ($this->{$this->primaryKey} ? true : false);
 
         $sql = '';
 
@@ -56,16 +56,23 @@ abstract class db_table_row {
         } else {
             $sql .= 'UPDATE ' . $dbTable . ' SET ';
             foreach($cols as $col => $data){
-                $sql .= $col . '=' . (is_null($data) ? 'null' : '?').',';
-                if(!is_null($data)){
-                    $bindings[] = $data;
+                $sql .= $col . '=' . (is_null($this->{$col}) ? 'null' : '?').',';
+                if(!is_null($this->{$col})){
+                    $bindings[] = $this->{$col};
                 }
             }
             $sql = substr($sql,0,-1);
             $sql .= ' WHERE ' . $this->primaryKey . ' = ?';
             $bindings[] = $this->{$this->primaryKey};
         }
-        return resources::get('adapter')->runSql($sql,$bindings);
+        resources::get('adapter')->runSql($sql,$bindings);
+        $rv = $isUpdate ? $this->{$this->primaryKey} : resources::get('adapter')->lastInsertId();
+        
+        if(!$isUpdate && $this->primaryKey){
+            $this->{$this->primaryKey} = $rv;
+        }
+        
+        return $rv;
     }
     
     public function delete(){
@@ -76,6 +83,6 @@ abstract class db_table_row {
             throw new Exception('cant remove row that does not exists in database');
         }
         $sql = 'DELETE FROM ' . $this->getParentTable() . ' WHERE ' . $this->primaryKey . ' = ?';
-        return resources::get('adapter')->runSql($sql,$this->{$this->primaryKey});
+        return resources::get('adapter')->runSql($sql,array($this->{$this->primaryKey}));
     }
 }

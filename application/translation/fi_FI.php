@@ -28,5 +28,14 @@ return array(
     'username_is_too_short' => 'Käyttäjätunnus on liian lyhyt (min 3 merkkiä)',
     'password_is_too_weak' => 'Salasana on liian heikko',
     'email_is_not_valid' => 'Sähköpostiosoite ei ole validi',
-    'username_contains_invalid_char' => 'Käyttäjänimi sisältää kiellettyjä merkkejä'
+    'username_contains_invalid_char' => 'Käyttäjänimi sisältää kiellettyjä merkkejä',
+    'list_own_images' => 'Listaa omat kuvat',
+    'tags' => 'Tagit',
+    'tags_separated_by_space' => 'Tagit eroteltuna välilyönnillä',
+    'image_added' => 'Kuva lisätty',
+    'view_here' => 'Katso tästä',
+    'failed_to_upload_image' => 'Kuvan lisäys epäonnistui',
+    'no_file_sent' => 'Kuvaa ei lähtetty',
+    'save' => 'Tallenna'
+    
 );

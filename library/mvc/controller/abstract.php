@@ -12,6 +12,8 @@ abstract class mvc_controller_abstract{
     
     private $_viewScript;
     
+    
+    
     public function __construct(mvc_request $request) {
 
         $this->request = $request;
@@ -21,7 +23,12 @@ abstract class mvc_controller_abstract{
         $this->layoutScript = resources::get('layout');
         
         $this->_controllerName = $request->getController();
+        $this->init();
 
+    }
+    
+    protected function init(){
+        
     }
     
     public function run($action){

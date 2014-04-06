@@ -1,5 +1,12 @@
 <h1><?=$this->translate('add_image')?></h1>
-<form class="form-horizontal" role="form" action="<?=$this->baseUrl('image/postimage')?>" method="POST">
+<?php if($this->image): ?>
+<div class="alert alert-success"><?=$this->translate('image_added')?>
+    <a href="<?=$this->baseUrl('image/view/id/'.$this->image->short_url_id)?>"><?=$this->translate('view_here')?></a></div>
+<?php endif; ?>
+<?php if($this->error): ?>
+<div class="alert alert-danger"><?=$this->translate('failed_to_upload_image')?>: <?=$this->translate($this->error->getMessage())?></div>
+<?php endif; ?>
+<form class="form-horizontal" role="form" enctype="multipart/form-data" action="<?=$this->baseUrl('image/postimage')?>" method="POST">
   <div class="form-group">
     <label for="inputFile" class="col-md-2 control-label"><?=$this->translate('image_file')?></label>
     <div class="col-md-10">
@@ -10,6 +17,12 @@
     <label for="inputDesc" class="col-md-2 control-label"><?=$this->translate('description')?></label>
     <div class="col-md-10">
       <input type="text" class="form-control" id="inputDesc" name="description" placeholder="<?=$this->translate('description')?>">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputTags" class="col-md-2 control-label"><?=$this->translate('tags')?></label>
+    <div class="col-md-10">
+      <input type="text" class="form-control" id="inputTags" name="tags" placeholder="<?=$this->translate('tags_separated_by_space')?>">
     </div>
   </div>
   <div class="form-group">

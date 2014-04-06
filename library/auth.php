@@ -40,6 +40,6 @@ class auth {
     }
     
     public static function generateSalt($saltLength = 16){
-        return preg_replace("/[ ]/e",'chr(array_search(mt_rand(0, 62) ,array_flip(array_merge(range(48, 57), range(65, 90), range(97, 122)))))', str_repeat(" ", $saltLength));
+        return preg_replace("/[ ]/e",'chr(array_search(mt_rand(0, 61) ,array_flip(array_merge(range(48, 57), range(65, 90), range(97, 122)))))', str_repeat(" ", $saltLength));
     }
 }

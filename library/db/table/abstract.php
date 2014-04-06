@@ -31,7 +31,7 @@ abstract class db_table_abstract {
         if(!$cols){
             $sql .= '* ';
         } else {
-            $sql .= '('.implode(',', $cols).') ';
+            $sql .= implode(',', $cols).' ';
         }
 
         $sql .= 'FROM ' . $this->getTableName();
