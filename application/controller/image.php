@@ -1,25 +1,31 @@
 <?php
 class controller_image extends mvc_controller_abstract {
+    private $photoModel;
+    public function init(){
+        $this->photoModel = new model_photo();
+    }
     public function addAction(){
         $this->layout->title = 'add_image';
     }
     
     public function viewAction(){
         $this->layout->title = 'view_image';
-        $photoModel = new model_photo();
         
-        $image = $photoModel->getPhotoByShortUrlId($this->request->id);
+        $image = $this->photoModel->getPhotoByShortUrlId($this->request->id);
         if(!$image){
-            throw new Exception("404");
+            $this->redirect('index/index/message/1');
         }
 
         $this->view->image = $image;
+        $this->view->isLoggedIn = resources::get('session')->login;
     }
     
     public function postimageAction(){
-        $photoModel = new model_photo();
         try{
-            $this->view->image = $photoModel->addImage($_FILES['image'],$this->request->description,$this->request->tags);
+            $this->view->image = $this->photoModel->addImage(
+                    $_FILES['image'],
+                    htmlspecialchars($this->request->description),
+                    $this->request->tags);
         } catch(Exception $e){
             $this->view->error = $e;
         }
@@ -27,9 +33,7 @@ class controller_image extends mvc_controller_abstract {
     }
     
     public function getAction(){
-        $photoModel = new model_photo();
-        
-        if(!$photoModel->isCurrentUserValidToView($this->request->file)){
+        if(!$this->photoModel->isCurrentUserValidToView($this->request->file)){
             throw new Exception("403");
         }
         
@@ -38,28 +42,38 @@ class controller_image extends mvc_controller_abstract {
             throw new Excpetion("invalid_request");
         }
         
-        $photoModel->outputImage($this->request->file,intval($matches[1]),intval($matches[2]));
+        $this->photoModel->outputImage($this->request->file,intval($matches[1]),intval($matches[2]));
     }
     
     public function commentAction(){
-        $photoModel = new model_photo();
-        $photoModel->commentPhoto(
+        $this->photoModel->commentPhoto(
             $this->request->file,
             resources::get('session')->user->id,
-            $this->request->comment
+            htmlspecialchars($this->request->comment)
         );
         $this->redirect($this->request->returnPath);
     }
     
     public function removeAction(){
-        $photoModel = new model_photo();
-        $photoModel->remove($this->request->file_id);
+        $this->photoModel->remove($this->request->file_id);
         $this->redirect('list/own');
     }
     
     public function rateAction(){
-        $photoModel = new model_photo();
-        $photoModel->rateImage($this->request->file,$this->request->rating);
+        $this->photoModel->rateImage($this->request->file,$this->request->rating);
         exit(0);
+    }
+    
+    public function changeprivacyAction(){
+        $photoModel = new model_photo();
+        
+        $visibility = intval($this->request->privacy);
+        
+        if($visibility < 0 || $visibility > 2){
+            throw new Exception("illegal_input");
+        }
+        
+        $photoModel->changeVisibility($this->request->file,$visibility);
+        $this->redirect('list/own');
     }
 }

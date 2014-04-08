@@ -63,7 +63,7 @@ class model_photo {
                  $uploadFileArray['name'],
                  resources::get('session')->user->id,
                  0,
-                 htmlspecialchars($description));
+                 $description);
          
         if (!move_uploaded_file(
             $uploadFileArray['tmp_name'],
@@ -164,9 +164,22 @@ class model_photo {
     }
     
     public function rateImage($fileId,$rating){
-        $photoRow = $this->photoTable->fetchRow(array("file_id = ?" => $fileId));
+        list($visCond,$user) = $this->photoTable->getVisibilityCondition();
+        $photoRow = $this->photoTable->fetchRow(array("file_id = ?" => $fileId, $visCond => $user));
+        if(!$photoRow){
+            throw new Exception("photo_not_found");
+        }
         $photoRow->rating_sum += intval($rating);
         $photoRow->rating_count++;
+        $photoRow->save();
+    }
+    
+    public function changeVisibility($fileId,$visibility){
+        $photoRow = $this->photoTable->fetchRow(array("file_id = ?" => $fileId,"user_id = ?" => resources::get('session')->user->id));
+        if(!$photoRow){
+            throw new Exception("photo_not_found");
+        }
+        $photoRow->visibility = $visibility;
         $photoRow->save();
     }
     

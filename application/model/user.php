@@ -16,15 +16,15 @@ class model_user {
     public function isValidUser($username, $password1, $password2, $email){
         $errors = array();
         
-        if(!$this->usernameContainsOnlyValidChars($username)){
+        if($username !== null && !$this->usernameContainsOnlyValidChars($username)){
             $errors[] = self::USERNAME_CONTAINS_INVALID_CHAR;
         }
         
-        if($this->isUsernameInUse($username)){
+        if($username !== null &&$this->isUsernameInUse($username)){
             $errors[] = self::USERNAME_ALREADY_IN_USE;
         }
         
-        if(strlen($username) < 3){
+        if($username !== null && strlen($username) < 3){
             $errors[] = self::USERNAME_TOO_SHORT;
         }
         
@@ -79,5 +79,17 @@ class model_user {
         } else {
             return $isValid;
         }
+    }
+    public function editUser($userId,$email,$password1,$password2){
+        $isValid = $this->isValidUser(null,$password1,$password2,$email);
+        
+        if($isValid === true){
+            $userRow = $this->userTable->fetchRow(array('id = ?' => $userId));
+            $userRow->password = auth::hashPassword($password1,$userRow->password_salt);
+            $userRow->email = $email;
+            $userRow->save();
+            return true;
+        }
+        return $isValid;
     }
 }

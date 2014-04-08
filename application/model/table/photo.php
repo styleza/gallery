@@ -4,7 +4,12 @@ class model_table_photo extends db_table_abstract {
     protected $entityClass = 'model_entity_photo';
     
     public function getPhotoObjects($conditions){
-        $sql = 'SELECT p.* FROM photo p JOIN users u ON u.id = p.user_id WHERE ';
+        $allowed = array(0);
+        if(resources::get('session')->login){
+            $allowed[] = 1;
+        }
+        $myId = resources::get('session')->user ? resources::get('session')->user->id : 0;
+        $sql = 'SELECT p.* FROM photo p JOIN users u ON u.id = p.user_id WHERE (p.visibility IN ('.implode(',',$allowed).') OR user_id = '.$myId.') AND ';
         $sql .= implode(' AND ',array_keys($conditions));
         return $this->parseResult($this->fetchSql($sql, array_values($conditions), true));
     }
@@ -27,6 +32,15 @@ class model_table_photo extends db_table_abstract {
             );
         }
         return $photos;
+    }
+    
+    public function getVisibilityCondition(){
+        $user = resources::get('session')->user ? resources::get('session')->user->id : 0;
+        $visibilityCondition = 'visibility IN (0'.($user ? ',1)':')').' OR user_id = ?';
+        
+        return array(
+            $visibilityCondition,$user
+        );
     }
 
 }

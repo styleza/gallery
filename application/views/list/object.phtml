@@ -5,7 +5,15 @@
     <p><?=$this->photo->description?></p>
     <?php if($this->controls){ ?>
     <p><a href="<?=$this->baseUrl('image/remove/file_id/'.$this->photo->file_id)?>" class="btn btn-default" role="button"><?=$this->translate('remove')?></a>
-        <a href="#" class="btn btn-default" role="button"><?=$this->translate('edit_privacy')?></a></p>
+        <div class="dropdown">
+        <button class="btn dropdown-toggle btn-default" type="button" id="dropDown<?=$this->photo->file_id?>" data-toggle="dropdown"><?=$this->translate('edit_privacy')?></button></p>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropDown<?=$this->photo->file_id?>">
+            <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/0')?>"><?=$this->translate("visible_for_all")?></a></li>
+            <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/1')?>"><?=$this->translate("visible_for_logged_in")?></a></li>
+            <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/2')?>"><?=$this->translate("visible_for_only_me")?></a></li>
+            
+        </ul>
+        </div>
     <?php } ?>
   </div>
 </div>

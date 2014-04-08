@@ -8,10 +8,34 @@ class model_top{
     }
     
     public function getNewestPictures($n = 3){
-        return $this->photoTable->fetchConditional(array(), null, "id DESC", $n);
+        
+        list($visibilityCondition,$user) = $this->photoTable->getVisibilityCondition();
+        
+        return $this->photoTable->fetchConditional(
+                array($visibilityCondition => $user),
+                null,
+                "id DESC",
+            $n);
     }
     
     public function getTopRated($n = 3){
-        return $this->photoTable->fetchConditional(array("rating_count > ?" => 0), array("*","rating_sum/rating_count as rating"), "rating DESC", $n);
+        
+        list($visibilityCondition,$user) = $this->photoTable->getVisibilityCondition();
+        
+        return $this->photoTable->fetchConditional(
+                array(
+                    "rating_count > ?" => 0,
+                    $visibilityCondition => $user
+                ),
+                array("*","rating_sum/rating_count as rating"),
+                "rating DESC",
+                $n
+            );
     }
+    public function getMostUsedTags($n = 3){
+        $tagTable = new model_table_tag();
+        return $tagTable->getMostUsedTags($n);
+    }
+    
+    
 }

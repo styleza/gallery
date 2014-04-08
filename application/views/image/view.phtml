@@ -1,3 +1,6 @@
+<?php 
+$rating = round($this->image["photo"]->rating_count > 0 ? $this->image["photo"]->rating_sum / $this->image["photo"]->rating_count : 0);
+?>
 <img src="<?=$this->baseUrl('image/get/file/'.$this->image["photo"]->file_id.'/size/800x600')?>" alt="..." />
 <div id="dsc" class="panel panel-default"><?=$this->image["photo"]->description?></div>
 
@@ -8,7 +11,14 @@
 </div>
 
 <div class="panel">
-    <input type="number" name="rate" id="rating_element" class="rating" />
+<?php if($this->isLoggedIn){ ?>
+    <input type="number" name="rate" id="rating_element" class="rating" value="<?=$rating?>" disabled />
+<?php } else {
+    echo str_repeat("<i class='glyphicon glyphicon-star'></i>", $rating);
+    echo str_repeat("<i class='glyphicon glyphicon-star-empty'></i>",6-$rating);
+}
+?>
+    
 </div>
 <?php foreach($this->image["comments"] as $comment){ ?>
 <div class="panel panel-primary">
@@ -23,10 +33,10 @@
 <input type="hidden" name="returnPath" value="image/view/id/<?=$this->image["photo"]->short_url_id?>" />
 <div>
   <div class="input-group">
-    <input type="text" class="form-control" name="comment">
+    <input type="text" class="form-control" name="comment" <?=($this->isLoggedIn?'':'disabled')?> >
     <span class="input-group-btn">
         
-      <button class="btn btn-default" type="submit"><?=$this->translate('comment')?> <span class ="glyphicon glyphicon-comment"></span></button>
+      <button class="btn btn-default" type="submit" <?=($this->isLoggedIn?'':'disabled')?> ><?=$this->translate('comment')?> <span class ="glyphicon glyphicon-comment"></span></button>
     </span>
   </div>
 </div>

@@ -17,4 +17,14 @@ class model_table_tag extends db_table_abstract {
         }
         return $rv;
     }
+    
+    public function getMostUsedTags($n){
+        $sql = 'SELECT count(t.id) as count,t.* FROM tag t JOIN photo_tag pt ON pt.tag_id = t.id GROUP BY t.id ORDER BY count DESC LIMIT '.$n;
+        $rows = $this->fetchSql($sql, array(), false);
+        $rv = array();
+        foreach($rows as $row){
+            $rv[$row['id']] = $row['tag_name'];
+        }
+        return $rv;
+    }
 }

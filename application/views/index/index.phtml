@@ -1,3 +1,9 @@
+<?php if($this->message == 1): ?>
+<div class="alert alert-danger"><?=$this->translate('image_you_requested_is_deleted_or_you_dont_have_access')?></div>
+<?php endif; ?>
+<?php if($this->message == 2): ?>
+<div class="alert alert-danger"><?=$this->translate('you_dont_have_access_to_requested_resource')?></div>
+<?php endif; ?>
 <h2><?=$this->translate('recent_images')?></h2>
 <?php foreach($this->newest as $photo){
     echo $this->partial('views/list/object.phtml',array('photo' => $photo,'controls' => false));
@@ -9,7 +15,7 @@
 }?>
 <div style="clear:both"></div>
 <h2><?=$this->translate('most_used_tags')?></h2>
+<?php foreach($this->tags as $id => $name){ ?>
+<a href="list/tag/id/<?=$id?>"><?=$name?></a>
+<?php } ?>
 
-<a href="list/tag">tag1</a>
-<a href="list/tag">tag2</a>
-<a href="list/tag">tag3</a>
