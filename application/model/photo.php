@@ -102,17 +102,35 @@ class model_photo {
         return $this->photoTable->getPhotoObjects(array("u.id = ?" => $userId));
     }
     
+    public function getPhotosByUsername($username){
+        $userTable = new model_table_users();
+        $user = $userTable->fetchRow(array("username = ?" => $username));
+        
+        if($user){
+            return $this->getPhotosByUserId($user->id);
+        } else {
+            return array();
+        }
+    }
+    
     public function isCurrentUserValidToView($fileId){
         return true;
     }
     
-    public function outputImage($fileId,$width,$height){
+    public function outputImage($fileId,$width,$height,$cacheKey){
         $fileLocation = resources::get('config')->get('uploadDir',APPLICATION_PATH . '/upload') . '/' . $fileId;
-        $image = new Imagick($fileLocation);
-        $image->thumbnailimage($width, $height);
-        $image->setImageFormat('jpeg');
         header('Content-Type: image/jpeg');
-        echo $image;
+        
+        if(!file_exists($fileLocation . $cacheKey)){
+            $image = new Imagick($fileLocation);
+            $image->thumbnailimage($width, $height);
+            $image->setImageFormat('jpeg');
+            $image->writeimage($fileLocation . $cacheKey);
+            echo $image;
+        } else {
+            readfile($fileLocation . $cacheKey);
+        }
+        
         exit(0);
     }
     
@@ -176,11 +194,24 @@ class model_photo {
     
     public function changeVisibility($fileId,$visibility){
         $photoRow = $this->photoTable->fetchRow(array("file_id = ?" => $fileId,"user_id = ?" => resources::get('session')->user->id));
+        
         if(!$photoRow){
             throw new Exception("photo_not_found");
         }
+        
         $photoRow->visibility = $visibility;
         $photoRow->save();
+    }
+    public function changeDescription($fileId,$description){
+        $photoRow = $this->photoTable->fetchRow(array("file_id = ?" => $fileId,"user_id = ?" => resources::get('session')->user->id));
+        
+        if(!$photoRow){
+            throw new Exception("photo_not_found");
+        }
+        
+        $photoRow->description = $description;
+        $photoRow->save();
+        
     }
     
 }

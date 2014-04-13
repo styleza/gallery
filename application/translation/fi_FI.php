@@ -36,6 +36,15 @@ return array(
     'view_here' => 'Katso tästä',
     'failed_to_upload_image' => 'Kuvan lisäys epäonnistui',
     'no_file_sent' => 'Kuvaa ei lähtetty',
-    'save' => 'Tallenna'
+    'save' => 'Tallenna',
+    'added_by'=> 'Kuvan lisännyt:',
+    'registeration_succeeded' => 'Rekisteröinti onnistui, voit nyt kirjautua sisään sivun ylälaidasta',
+    'nothing_to_show' => 'Ei mitään näytettävää',
+    'visible_for_all' => 'Näkyy kaikille',
+    'visible_for_logged_in' => 'Näkyy kirjautuneille',
+    'visible_for_only_me' => 'Piilota muilta',
+    'change' => 'Vaihda',
+    'passwords_doesnt_match' => 'Salasanat eivät täsmää',
+    'user_info_saved' => 'Käyttäjätiedot tallennettu'
     
 );

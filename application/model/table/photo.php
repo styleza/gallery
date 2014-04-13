@@ -24,11 +24,13 @@ class model_table_photo extends db_table_abstract {
         $photos = array();
         $commentTable = new model_table_comment();
         $tagTable = new model_table_tag();
+        $userTable = new model_table_users();
         foreach($sqlResult as $row){
 
             $photos[] = array("photo" => $row,
                 "comments" => $commentTable->getCommentsForPhoto($row->id),
-                "tags" => $tagTable->getTagsForPhoto($row->id)
+                "tags" => $tagTable->getTagsForPhoto($row->id),
+                "user" => $userTable->fetchRow(array("id = ?" => $row->user_id))
             );
         }
         return $photos;
@@ -36,7 +38,7 @@ class model_table_photo extends db_table_abstract {
     
     public function getVisibilityCondition(){
         $user = resources::get('session')->user ? resources::get('session')->user->id : 0;
-        $visibilityCondition = 'visibility IN (0'.($user ? ',1)':')').' OR user_id = ?';
+        $visibilityCondition = '(visibility IN (0'.($user ? ',1)':')').' OR user_id = ?)';
         
         return array(
             $visibilityCondition,$user

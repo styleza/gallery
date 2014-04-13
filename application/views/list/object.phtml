@@ -2,19 +2,39 @@
 <div class="thumbnail">
     <a href="<?=$this->baseUrl('image/view/id/'.$this->photo->short_url_id)?>"><img src="<?=$this->baseUrl('image/get/file/'.$this->photo->file_id.'/size/300x200')?>"></a>
   <div class="caption">
-    <p><?=$this->photo->description?></p>
-    <?php if($this->controls){ ?>
-    <p><a href="<?=$this->baseUrl('image/remove/file_id/'.$this->photo->file_id)?>" class="btn btn-default" role="button"><?=$this->translate('remove')?></a>
-        <div class="dropdown">
-        <button class="btn dropdown-toggle btn-default" type="button" id="dropDown<?=$this->photo->file_id?>" data-toggle="dropdown"><?=$this->translate('edit_privacy')?></button></p>
+    
+    <?php if($this->controls): ?>
+      <div>
+          <form class="form-horizontal" role="form" action="<?=$this->baseUrl('image/editdescription/file/'.$this->photo->file_id)?>" method="POST">
+            <div class="input-group">
+              <input type="text" class="form-control" name="description" value="<?=$this->photo->description?>" >
+              <span class="input-group-btn">
+
+                <button class="btn btn-default" type="submit"><?=$this->translate('change')?></button>
+              </span>
+            </div>
+          </form>
+      </div>
+
+      <div style="float:left">
+          <a href="<?=$this->baseUrl('image/remove/file_id/'.$this->photo->file_id)?>" class="btn btn-default" role="button"><?=$this->translate('remove')?></a>
+      </div>
+    <div class="dropdown"  style="float:right">
+        <button class="btn dropdown-toggle btn-default" type="button" id="dropDown<?=$this->photo->file_id?>" data-toggle="dropdown"><?=$this->translate('edit_privacy')?></button>
+    
+      
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropDown<?=$this->photo->file_id?>">
             <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/0')?>"><?=$this->translate("visible_for_all")?></a></li>
             <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/1')?>"><?=$this->translate("visible_for_logged_in")?></a></li>
             <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/2')?>"><?=$this->translate("visible_for_only_me")?></a></li>
-            
+
         </ul>
-        </div>
-    <?php } ?>
+      </div>
+      <div style="clear:both"></div>
+    
+    <?php else: ?>
+    <p><?=$this->photo->description?></p>
+    <?php endif; ?>
   </div>
 </div>
 </div>

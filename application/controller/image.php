@@ -37,12 +37,14 @@ class controller_image extends mvc_controller_abstract {
             throw new Exception("403");
         }
         
+        $cacheKey = md5($this->request->file.$this->request->size);
+        
         preg_match("/([0-9]+)x([0-9]+)/",$this->request->size,$matches);
         if(count($matches) != 3){
             throw new Excpetion("invalid_request");
         }
         
-        $this->photoModel->outputImage($this->request->file,intval($matches[1]),intval($matches[2]));
+        $this->photoModel->outputImage($this->request->file,intval($matches[1]),intval($matches[2]),$cacheKey);
     }
     
     public function commentAction(){
@@ -65,15 +67,18 @@ class controller_image extends mvc_controller_abstract {
     }
     
     public function changeprivacyAction(){
-        $photoModel = new model_photo();
-        
         $visibility = intval($this->request->privacy);
         
         if($visibility < 0 || $visibility > 2){
             throw new Exception("illegal_input");
         }
         
-        $photoModel->changeVisibility($this->request->file,$visibility);
+        $this->photoModel->changeVisibility($this->request->file,$visibility);
+        $this->redirect('list/own');
+    }
+    
+    public function editdescriptionAction(){
+        $this->photoModel->changeDescription($this->request->file,  htmlspecialchars($this->request->description));
         $this->redirect('list/own');
     }
 }

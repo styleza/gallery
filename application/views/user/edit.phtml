@@ -1,4 +1,12 @@
 <h1><?=$this->translate('edit_own_info')?></h1>
+<?php if($this->error){
+    foreach($this->error as $error){ ?>
+<div class="alert alert-danger"><?=$this->translate($error)?></div>
+<?php
+    }
+}
+?>
+
 <form class="form-horizontal" role="form" action="<?=$this->baseUrl('user/postedit')?>" method="POST">
   <div class="form-group">
     <label for="inputEmail1" class="col-md-2 control-label"><?=$this->translate('e-mail')?></label>

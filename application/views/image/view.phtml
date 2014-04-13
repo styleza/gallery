@@ -3,7 +3,7 @@ $rating = round($this->image["photo"]->rating_count > 0 ? $this->image["photo"]-
 ?>
 <img src="<?=$this->baseUrl('image/get/file/'.$this->image["photo"]->file_id.'/size/800x600')?>" alt="..." />
 <div id="dsc" class="panel panel-default"><?=$this->image["photo"]->description?></div>
-
+<div class="panel"><?=$this->translate('added_by')?> <a href="<?=$this->baseUrl('list/user/username/'.$this->image["user"]->username)?>"><?=$this->image["user"]->username?></a></div>
 <div class="panel">
     <?php foreach($this->image["tags"] as $tagId => $tagName){?>
     <a href="list/tag/id/<?=$tagId?>"><?=$tagName?></a>
@@ -22,7 +22,7 @@ $rating = round($this->image["photo"]->rating_count > 0 ? $this->image["photo"]-
 </div>
 <?php foreach($this->image["comments"] as $comment){ ?>
 <div class="panel panel-primary">
-  <div class="panel-heading"><?=$comment["username"]?> @ <?=date("d.m.Y H:i",strtotime($comment["comment_added"]))?></div>
+    <div class="panel-heading"><a style="color:white" href="<?=$this->baseUrl('list/user/username/'.$comment["username"])?>"><?=$comment["username"]?></a> @ <?=date("d.m.Y H:i",strtotime($comment["comment_added"]))?></div>
   <div class="panel-body">
     <?=$comment["comment"]?>
   </div>

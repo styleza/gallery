@@ -38,7 +38,8 @@ class photoApp extends application {
         
         $authAllowed = array('/','index/index','auth/logout','user/edit','list/user',
             'image/view','test/db','test/connection','image/add','list/tag','image/postimage','list/own',
-            'image/get','image/comment','image/remove','image/rate','image/changeprivacy','user/postedit');
+            'image/get','image/comment','image/remove','image/rate','image/changeprivacy','user/postedit',
+            'image/editdescription');
         
         $controllerAction = $this->_request->controller . '/' . $this->_request->action;
 
