@@ -40,4 +40,11 @@ class model_tag {
             $this->photoTagTable->addTag($photoId,$tagId);
         }
     }
+    
+    public function retagPhoto($photoId,$tags){
+         
+        $this->photoTagTable->delete(array('photo_id = ?' => $photoRow->id));
+        
+        $this->tagPhoto($photoId,$this->solveTags($tags));
+    }
 }

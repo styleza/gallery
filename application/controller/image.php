@@ -81,4 +81,11 @@ class controller_image extends mvc_controller_abstract {
         $this->photoModel->changeDescription($this->request->file,  htmlspecialchars($this->request->description));
         $this->redirect('list/own');
     }
+    
+    public function edittagsAction(){
+        $this->photoModel->retag($this->request->file, $this->request->tags);
+        $this->redirect('list/own');
+    }
+    
+    
 }

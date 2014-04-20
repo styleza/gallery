@@ -6,7 +6,7 @@ class auth {
         $this->_session = resources::get('session');
     }
     
-    public function authenticate($identity, $password, $dbTable, $passwordColumn = 'password',$saltColumn = 'password_salt'){
+    public function authenticate($identity, $password, $dbTable, $passwordColumn = 'password',$saltColumn = 'password_salt', $loginTimestamp = 'last_login'){
         $id2 = array();
         
         foreach($identity as $id => $value){
@@ -20,6 +20,8 @@ class auth {
         $hashedPassword = self::hashPassword($password,$row->{$saltColumn});
         
         if($row && $row->{$passwordColumn} == $hashedPassword){
+            $row->{$loginTimestamp} = date("Y-m-d H:i:s");
+            $row->save();
             $this->saveSessionData($identity,$row);
             return true;
         } else {

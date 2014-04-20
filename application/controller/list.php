@@ -26,4 +26,14 @@ class controller_list extends mvc_controller_abstract {
         $this->view->isownpage = true;
         $this->changeView('list');
     }
+    
+    public function searchAction(){
+        if($this->request->searchDesc && strlen($this->request->searchDesc) >= 3){
+            $this->view->images = $this->photoModel->searchByDescription($this->request->searchDesc);
+            $this->view->isSearch = true;
+        } else if($this->request->searchTag && strlen($this->request->searchTag) >= 3){
+            $this->view->images = $this->photoModel->searchByTags($this->request->searchTag);
+            $this->view->isSearch = true;
+        }
+    }
 }

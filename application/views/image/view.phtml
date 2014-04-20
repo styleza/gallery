@@ -33,7 +33,7 @@ $rating = round($this->image["photo"]->rating_count > 0 ? $this->image["photo"]-
 <input type="hidden" name="returnPath" value="image/view/id/<?=$this->image["photo"]->short_url_id?>" />
 <div>
   <div class="input-group">
-    <input type="text" class="form-control" name="comment" <?=($this->isLoggedIn?'':'disabled')?> >
+    <input type="text" class="form-control" name="comment" <?=($this->isLoggedIn?'':'disabled')?> required>
     <span class="input-group-btn">
         
       <button class="btn btn-default" type="submit" <?=($this->isLoggedIn?'':'disabled')?> ><?=$this->translate('comment')?> <span class ="glyphicon glyphicon-comment"></span></button>

@@ -211,7 +211,28 @@ class model_photo {
         
         $photoRow->description = $description;
         $photoRow->save();
+    }
+    
+    public function retag($fileId,$tags){
+        $photoRow = $this->photoTable->fetchRow(array("file_id = ?" => $fileId,"user_id = ?" => resources::get('session')->user->id));
+        $photoTagTable = new model_table_phototag();
         
+        if(!$photoRow){
+            throw new Exception("photo_not_found");
+        }
+        
+        $photoTagTable->delete(array('photo_id = ?' => $photoRow->id));
+        
+        $this->tagPhoto($photoRow->id,$tags);
+    }
+    
+    public function searchByDescription($description){
+        return $this->photoTable->getPhotoObjects(array("description like ?" => "%".$description."%"));
+    }
+    
+    public function searchByTags($tags){
+        $solvedTags = $this->tagModel->solveTags($tags);
+        return $this->photoTable->getPhotoObjectsByTag($solvedTags);
     }
     
 }

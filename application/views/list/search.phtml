@@ -1,0 +1,25 @@
+<form class="form-inline" role="form" method="POST">
+  <div class="form-group">
+    <label class="sr-only" for="searchDesc"><?=$this->translate('search_by_description')?></label>
+    <input pattern=".{3,}" required title="<?=$this->translate('min_3_chars')?>" type="text" class="form-control" name="searchDesc" id="searchDesc" placeholder="<?=$this->translate('description_or_part')?>">
+  </div>
+    <button type="submit" class="btn btn-default"><?=$this->translate('search')?></button>
+</form>
+<form class="form-inline" role="form" method="POST">
+  <div class="form-group">
+    <label  class="sr-only"  for="searchTag"><?=$this->translate('search_by_tag')?></label>
+    <input pattern=".{3,}" required title="<?=$this->translate('min_3_chars')?>" name="searchTag" type="text" class="form-control" id="searchTag" placeholder="<?=$this->translate('tags_separated_by_space')?>">
+  </div>
+  <button type="submit" class="btn btn-default"><?=$this->translate('search')?></button>
+</form>
+<?php if($this->isSearch): ?>
+<?php if(!$this->images): ?>
+<div class="alert alert-danger"><?=$this->translate('nothing_to_show')?></div>
+<?php else: ?>
+<div class="row">
+    <?php foreach($this->images as $image){
+       echo $this->partial('views/list/object.phtml',array('photo' => $image["photo"], 'controls' => $this->isownpage, 'tags' => $image['tags']));
+    } ?>
+</div>
+<?php endif; // has result?>
+<?php endif; // is search?>

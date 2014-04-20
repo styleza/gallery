@@ -45,6 +45,11 @@ return array(
     'visible_for_only_me' => 'Piilota muilta',
     'change' => 'Vaihda',
     'passwords_doesnt_match' => 'Salasanat eivät täsmää',
-    'user_info_saved' => 'Käyttäjätiedot tallennettu'
+    'user_info_saved' => 'Käyttäjätiedot tallennettu',
+    'own_photos' => 'Omat kuvat',
+    'image_you_requested_is_deleted_or_you_dont_have_access' => 'Kuva on poistettu tai sinulla ei ole oikeuksia siihen',
+    'search' => 'Etsi',
+    'description_or_part' => 'Kuvaus tai sen osa',
+    'min_3_chars' => 'Vähintään 3 merkkiä'
     
 );

@@ -15,6 +15,17 @@
             </div>
           </form>
       </div>
+      <div>
+          <form class="form-horizontal" role="form" action="<?=$this->baseUrl('image/edittags/file/'.$this->photo->file_id)?>" method="POST">
+            <div class="input-group">
+              <input type="text" class="form-control" name="tags" value="<?=implode(' ',$this->tags)?>" >
+              <span class="input-group-btn">
+
+                <button class="btn btn-default" type="submit"><?=$this->translate('tag')?></button>
+              </span>
+            </div>
+          </form>
+      </div>
 
       <div style="float:left">
           <a href="<?=$this->baseUrl('image/remove/file_id/'.$this->photo->file_id)?>" class="btn btn-default" role="button"><?=$this->translate('remove')?></a>
@@ -24,9 +35,9 @@
     
       
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropDown<?=$this->photo->file_id?>">
-            <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/0')?>"><?=$this->translate("visible_for_all")?></a></li>
-            <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/1')?>"><?=$this->translate("visible_for_logged_in")?></a></li>
-            <li role="presentation"><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/2')?>"><?=$this->translate("visible_for_only_me")?></a></li>
+            <li role="presentation" <?=$this->photo->visibility == 0 ? 'class="disabled"':''?>><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/0')?>"><?=$this->translate("visible_for_all")?></a></li>
+            <li role="presentation" <?=$this->photo->visibility == 1 ? 'class="disabled"':''?>><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/1')?>"><?=$this->translate("visible_for_logged_in")?></a></li>
+            <li role="presentation" <?=$this->photo->visibility == 2 ? 'class="disabled"':''?>><a role="menuitem" href="<?=$this->baseUrl('image/changeprivacy/file/'.$this->photo->file_id.'/privacy/2')?>"><?=$this->translate("visible_for_only_me")?></a></li>
 
         </ul>
       </div>

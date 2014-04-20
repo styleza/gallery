@@ -4,20 +4,21 @@ class model_table_photo extends db_table_abstract {
     protected $entityClass = 'model_entity_photo';
     
     public function getPhotoObjects($conditions){
-        $allowed = array(0);
-        if(resources::get('session')->login){
-            $allowed[] = 1;
-        }
-        $myId = resources::get('session')->user ? resources::get('session')->user->id : 0;
-        $sql = 'SELECT p.* FROM photo p JOIN users u ON u.id = p.user_id WHERE (p.visibility IN ('.implode(',',$allowed).') OR user_id = '.$myId.') AND ';
+        list($visCond,$user) = $this->getVisibilityCondition();
+        $sql = 'SELECT p.* FROM photo p JOIN users u ON u.id = p.user_id WHERE '.$visCond.' AND ';
         $sql .= implode(' AND ',array_keys($conditions));
-        return $this->parseResult($this->fetchSql($sql, array_values($conditions), true));
+        return $this->parseResult($this->fetchSql($sql, array_merge(array($user),array_values($conditions)), true));
     }
     
-    public function getPhotoObjectsByTag($tagId){
+    public function getPhotoObjectsByTag($tagIds){
+        if(!is_array($tagIds)){
+            $tagIds = array($tagIds);
+        }
+        list($visCond,$user) = $this->getVisibilityCondition();
         $sql = 'SELECT p.* FROM photo p JOIN photo_tag pt ON pt.photo_id = p.id'
-                . ' WHERE pt.tag_id = ?';
-        return $this->parseResult($this->fetchSql($sql, array($tagId), true));
+                . ' WHERE '.$visCond.' AND pt.tag_id IN ('.implode(',',array_fill(0,count($tagIds),'?')).')';
+       
+        return $this->parseResult($this->fetchSql($sql, array_merge(array($user),array_values($tagIds)), true));
     }
     
     private function parseResult($sqlResult){
